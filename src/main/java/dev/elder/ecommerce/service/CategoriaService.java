@@ -23,6 +23,6 @@ public class CategoriaService {
         return repository.findByNome(name).get();
     }
 
-    
+
     
 }
