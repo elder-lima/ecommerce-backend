@@ -19,7 +19,7 @@ public class Categoria {
     private String nome;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categorias")
     private Set<Produto> produtos = new HashSet<>();
 
     public Categoria() {

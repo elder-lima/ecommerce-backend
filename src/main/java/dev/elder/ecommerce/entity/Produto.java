@@ -32,8 +32,8 @@ public class Produto {
     @ManyToMany
     @JoinTable(
             name = "produto_categoria",
-            joinColumns = @JoinColumn(name = "produto_id"),
-            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+            joinColumns = @JoinColumn(name = "produto_fk"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_fk"))
     private Set<Categoria> categorias = new HashSet<>();
 
     public Produto() {
