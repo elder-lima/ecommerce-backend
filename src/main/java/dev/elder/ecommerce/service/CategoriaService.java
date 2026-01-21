@@ -7,6 +7,7 @@ import dev.elder.ecommerce.repository.CategoriaRepository;
 import dev.elder.ecommerce.service.exceptions.ConflictException;
 import dev.elder.ecommerce.service.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +21,19 @@ public class CategoriaService {
     public CategoriaService(CategoriaRepository repository) {
         this.repository = repository;
     }
-    
+
+    @Transactional(readOnly = true)
     public List<CategoriaResponse> findAll() {
         return repository.findAll().stream().map(x -> new CategoriaResponse(x.getNome())).toList();
     }
-    
+
+    @Transactional(readOnly = true)
     public CategoriaResponse findByName(String name) {
         Categoria categoria = repository.findByNome(name).orElseThrow(() -> new ResourceNotFoundException(name));
         return new CategoriaResponse(categoria.getNome());
     }
 
+    @Transactional
     public CategoriaResponse insert(CategoriaRequest obj) {
         if (repository.existsByNome(obj.nome())) {
             throw new ConflictException("Categoria "+ obj.nome() +" já existe.");
@@ -41,6 +45,7 @@ public class CategoriaService {
         return dto;
     }
 
+    @Transactional
     public void delete(String nome) {
         Categoria categoria = repository.findByNome(nome).orElseThrow(() -> new ResourceNotFoundException(nome));
         repository.delete(categoria);

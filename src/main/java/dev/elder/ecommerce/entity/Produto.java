@@ -87,6 +87,10 @@ public class Produto {
         this.imagem = imagem;
     }
 
+    public Set<Categoria> getCategorias() {
+        return categorias;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
