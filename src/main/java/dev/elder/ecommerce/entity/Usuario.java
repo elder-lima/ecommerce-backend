@@ -32,5 +32,54 @@ public class Usuario{
     )
     private AuthUser authUser;
 
+    public Usuario() {
+    }
 
+    public Usuario(UUID userId, String nome, String telefone, String cpf, AuthUser authUser) {
+        this.userId = userId;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.authUser = authUser;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public AuthUser getAuthUser() {
+        return authUser;
+    }
+
+    public void setAuthUser(AuthUser authUser) {
+        this.authUser = authUser;
+    }
 }
