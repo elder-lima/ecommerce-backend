@@ -11,7 +11,6 @@ import java.util.UUID;
 public class Usuario{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     private UUID userId;
 
@@ -25,10 +24,10 @@ public class Usuario{
     private String cpf;
 
     @OneToOne(optional = false)
+    @MapsId
     @JoinColumn(
-            name = "auth_user_fk",
-            nullable = false,
-            unique = true
+            name = "user_id",
+            nullable = false
     )
     private AuthUser authUser;
 

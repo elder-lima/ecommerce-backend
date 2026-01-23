@@ -42,8 +42,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll() // acesso livre (login gera o token)
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll() // acesso livre (criar usuario)
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // acesso livre (login gera o token)
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // acesso livre (criar usuario)
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()) // API é stateless, CSRF é desnecessário

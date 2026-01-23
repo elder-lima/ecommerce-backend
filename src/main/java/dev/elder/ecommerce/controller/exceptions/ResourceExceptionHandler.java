@@ -7,6 +7,8 @@ import dev.elder.ecommerce.service.exceptions.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -33,6 +35,28 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    // Tratando erros de validação (@Valid) – 400
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationError> validation(
+            MethodArgumentNotValidException e,
+            HttpServletRequest request) {
+
+        ValidationError err = new ValidationError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.BAD_REQUEST.value());
+        err.setError("Validation error");
+        err.setMessage("Invalid fields");
+        err.setPath(request.getRequestURI());
+
+        // Percorre todos os campos inválidos, captura e adiciona na resposta de erro, no campo errors[]
+        for (FieldError f : e.getBindingResult() //relatório completo da validação
+                .getFieldErrors()) {
+            err.addError(f.getField(), f.getDefaultMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
     // Tratando ConflictException (409)
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<StandardError> conflict(
@@ -53,8 +77,18 @@ public class ResourceExceptionHandler {
 
     // Tratando erro de Autorização (401). Ex: erro no login
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<String> handleUnauthorized(UnauthorizedException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    public ResponseEntity<StandardError> handleUnauthorized(UnauthorizedException e, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+
+        StandardError err = new StandardError(
+                Instant.now(),
+                status.value(),
+                "Unauthorized",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }
 
 }
