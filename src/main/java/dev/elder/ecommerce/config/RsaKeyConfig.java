@@ -10,10 +10,10 @@ import java.security.interfaces.RSAPublicKey;
 @Configuration // Diz ao Spring: Essa classe contém definições de beans carregue ela na inicialização da aplicação.
 public class RsaKeyConfig {
 
-    @Value("classpath:private_key.pem")
+    @Value("classpath:private.key")
     private org.springframework.core.io.Resource privateKeyResource;
 
-    @Value("classpath:public_key.pem")
+    @Value("classpath:public.key")
     private org.springframework.core.io.Resource publicKeyResource;
 
     @Bean

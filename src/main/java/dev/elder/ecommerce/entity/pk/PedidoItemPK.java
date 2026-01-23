@@ -1,0 +1,35 @@
+package dev.elder.ecommerce.entity.pk;
+
+import dev.elder.ecommerce.entity.Pedido;
+import dev.elder.ecommerce.entity.Produto;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Embeddable
+public class PedidoItemPK {
+
+    @ManyToOne
+    @JoinColumn(name = "pedido_fk")
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_fk")
+    private Produto produto;
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+}
