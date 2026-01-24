@@ -37,6 +37,6 @@ application-dev.properties
 
 # Keys
 *.pem
-private_key.pem
-public_key.pem
+private.key
+public.key
 
