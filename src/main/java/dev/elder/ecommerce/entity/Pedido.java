@@ -30,7 +30,7 @@ public class Pedido {
     @JoinColumn(name = "usuario_fk", nullable = false)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "id.pedido")
+    @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL)
     private Set<PedidoItem> items = new HashSet<>();
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)

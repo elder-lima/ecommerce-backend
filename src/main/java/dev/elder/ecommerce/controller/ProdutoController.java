@@ -7,6 +7,7 @@ import dev.elder.ecommerce.service.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class ProdutoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<ProdutoResponse> insert(@RequestBody @Valid ProdutoRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.insert(request));
     }
