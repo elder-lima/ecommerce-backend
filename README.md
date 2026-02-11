@@ -99,7 +99,6 @@ GET  /pedidos
 ## 🧪 Boas Práticas Aplicadas
 
 * Uso de **DTOs** para entrada e saída
-* **Records** para responses
 * Validações nos DTOs
 * Transações controladas com `@Transactional`
 * Queries derivadas do Spring Data JPA
