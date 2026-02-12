@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 public record CreateUser(
 
@@ -23,7 +24,7 @@ public record CreateUser(
         String telefone,
 
         @NotBlank(message = "CPF é obrigatório")
-        @Pattern(regexp = "\\d{11}")
+        @CPF(message = "CPF inválido")
         String cpf
 
 ) {}
