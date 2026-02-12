@@ -46,13 +46,8 @@ public class AuthService {
     @Transactional
     public void register(CreateUser user) {
 
-        if (authUserRepository.existsByEmail(user.email())) {
-            throw new ConflictException("Email já cadastrado.");
-        }
-
-        if (usuarioRepository.existsByCpf(user.cpf())) {
-            throw new ConflictException("CPF já cadastrado");
-        }
+        verificarEmail(user.email());
+        verificarCpf(user.cpf());
 
         Role basicRole = roleRepository.findByNome(RoleName.ROLE_BASIC).orElseThrow(() -> new ResourceNotFoundException("ROLE_BASIC not found"));
 
@@ -69,6 +64,18 @@ public class AuthService {
         usuario.setAuthUser(authUser);
         usuarioRepository.save(usuario);
 
+    }
+
+    private void verificarEmail(String email) {
+        if (authUserRepository.existsByEmail(email)) {
+            throw new ConflictException("Email já cadastrado.");
+        }
+    }
+
+    private void verificarCpf(String cpf) {
+        if (usuarioRepository.existsByCpf(cpf)) {
+            throw new ConflictException("CPF já cadastrado.");
+        }
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
@@ -98,10 +105,6 @@ public class AuthService {
         String token = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         return new LoginResponse(token, expiresIn);
-    }
-
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
     }
 
 }
