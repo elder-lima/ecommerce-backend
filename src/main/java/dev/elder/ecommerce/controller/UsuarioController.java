@@ -5,6 +5,7 @@ import dev.elder.ecommerce.dto.response.UsuarioDetailResponse;
 import dev.elder.ecommerce.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UsuarioController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<List<UsuarioDetailResponse>> findAll() {
         return ResponseEntity.ok().body(usuarioService.findAll());
     }
