@@ -1,7 +1,8 @@
 package dev.elder.ecommerce.dto.response;
 
 import java.math.BigDecimal;
-import java.util.List;
+
+import java.util.Set;
 import java.util.UUID;
 
 public record ProdutoResponse(
@@ -11,6 +12,6 @@ public record ProdutoResponse(
         String descricao,
         BigDecimal preco,
         String imagem,
-        List<CategoriaResponse> categorias
+        Set<CategoriaResponse> categorias
 
 ) {}

@@ -1,6 +1,7 @@
 package dev.elder.ecommerce.service;
 
 import dev.elder.ecommerce.dto.request.ProdutoRequest;
+import dev.elder.ecommerce.dto.request.ProdutoUpdateRequest;
 import dev.elder.ecommerce.dto.response.CategoriaResponse;
 import dev.elder.ecommerce.dto.response.ProdutoResponse;
 import dev.elder.ecommerce.entity.Categoria;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -31,26 +34,19 @@ public class ProdutoService {
 
     @Transactional(readOnly = true)
     public List<ProdutoResponse> findAll() {
-        List<ProdutoResponse> dto = produtoRepository.findAll().stream().map(x -> new ProdutoResponse(x.getProduto_id(), x.getNome(), x.getDescricao(), x.getPreco(), x.getImagem(), x.getCategorias().stream().map(c -> new CategoriaResponse(c.getNome())).toList())).toList();
+        List<ProdutoResponse> dto = produtoRepository.findAll().stream().map(x -> new ProdutoResponse(x.getProduto_id(), x.getNome(), x.getDescricao(), x.getPreco(), x.getImagem(), x.getCategorias().stream().map(c -> new CategoriaResponse(c.getNome())).collect(Collectors.toSet()))).toList();
         return dto;
     }
 
     @Transactional(readOnly = true)
     public ProdutoResponse findById(UUID id) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-        return new ProdutoResponse(
-                produto.getProduto_id(),
-                produto.getNome(),
-                produto.getDescricao(),
-                produto.getPreco(),
-                produto.getImagem(),
-                produto.getCategorias().stream().map(c -> new CategoriaResponse(c.getNome())).toList()
-        );
+        return toResponse(produto);
     }
 
 
     @Transactional
-    public ProdutoResponse insert(@RequestBody ProdutoRequest request) {
+    public ProdutoResponse insert(ProdutoRequest request) {
         List<Categoria> categorias = categoriaRepository.findByNomeIn(request.categorias());
 
         if (categorias.size() != request.categorias().size()) {
@@ -65,14 +61,7 @@ public class ProdutoService {
         produto.getCategorias().addAll(categorias);
         produtoRepository.save(produto);
 
-        return new ProdutoResponse(
-                produto.getProduto_id(),
-                produto.getNome(),
-                produto.getDescricao(),
-                produto.getPreco(),
-                produto.getImagem(),
-                produto.getCategorias().stream().map(x -> new CategoriaResponse(x.getNome())).toList()
-        );
+        return toResponse(produto);
     }
 
     @Transactional
@@ -81,4 +70,44 @@ public class ProdutoService {
         produtoRepository.delete(produto);
     }
 
+    @Transactional
+    public ProdutoResponse update(UUID id, ProdutoUpdateRequest dto) {
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        applyUpdates(produto, dto);
+        produtoRepository.save(produto);
+        return toResponse(produto);
+    }
+
+    public ProdutoResponse toResponse(Produto produto) {
+        return new ProdutoResponse(
+                produto.getProduto_id(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getPreco(),
+                produto.getImagem(),
+                produto.getCategorias().stream().map(categoria -> new CategoriaResponse(categoria.getNome())).collect(Collectors.toSet())
+        );
+    }
+
+    public void applyUpdates(Produto produto, ProdutoUpdateRequest dto) {
+        if (dto.nome() != null) {
+            produto.setNome(dto.nome());
+        }
+        if (dto.descricao() != null) {
+            produto.setDescricao(dto.descricao());
+        }
+        if (dto.preco() != null) {
+            produto.setPreco(dto.preco());
+        }
+        if (dto.imagem() != null) {
+            produto.setImagem(dto.imagem());
+        }
+        if (dto.categorias() != null) {
+            Set<Categoria> categorias = dto.categorias().stream().map(categoriaDTO ->
+                categoriaRepository.findByNome(categoriaDTO.nome()).orElseThrow(() -> new ResourceNotFoundException("Uma ou mais categorias não existem"))
+            ).collect(Collectors.toSet());
+
+            produto.setCategorias(categorias);
+        }
+    }
 }

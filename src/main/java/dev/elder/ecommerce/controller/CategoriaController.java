@@ -34,7 +34,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')") // Apenas admin pode acesar essa rota.
     public ResponseEntity<CategoriaResponse> insert(@RequestBody @Valid CategoriaRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.insert(request));
     }

@@ -91,6 +91,10 @@ public class Produto {
         return categorias;
     }
 
+    public void setCategorias(Set<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
