@@ -86,7 +86,7 @@ public class AuthService {
         }
 
         Instant now = Instant.now();
-        var expiresIn = 300L; // token válido por 5 minutos
+        var expiresIn = 900L; // token válido por 15 minutos
 
         // Extração das Roles do Usuario: ROLE_ADMIN ou ROLE_BASIC
         String scope = user.getRoles().stream().map(role -> role.getNome().name()).collect(Collectors.joining(" ")); // Collerctors.joining(" "): junta vários valores em uma única String, separados por espaço.
