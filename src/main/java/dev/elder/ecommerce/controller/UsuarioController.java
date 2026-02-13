@@ -2,7 +2,7 @@ package dev.elder.ecommerce.controller;
 
 import dev.elder.ecommerce.dto.request.UsuarioUpdateRequest;
 import dev.elder.ecommerce.dto.response.UsuarioDetailResponse;
-import dev.elder.ecommerce.entity.Usuario;
+
 import dev.elder.ecommerce.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

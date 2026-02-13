@@ -9,10 +9,10 @@ import dev.elder.ecommerce.entity.Produto;
 import dev.elder.ecommerce.repository.CategoriaRepository;
 import dev.elder.ecommerce.repository.ProdutoRepository;
 import dev.elder.ecommerce.service.exceptions.ResourceNotFoundException;
-import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.List;
 import java.util.Optional;

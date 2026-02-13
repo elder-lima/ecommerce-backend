@@ -7,7 +7,7 @@ import dev.elder.ecommerce.dto.response.PedidoResponse;
 import dev.elder.ecommerce.dto.response.UsuarioResponse;
 import dev.elder.ecommerce.entity.*;
 import dev.elder.ecommerce.entity.enums.StatusPedido;
-import dev.elder.ecommerce.repository.AuthUserRepository;
+
 import dev.elder.ecommerce.repository.PedidoRepository;
 import dev.elder.ecommerce.repository.ProdutoRepository;
 import dev.elder.ecommerce.repository.UsuarioRepository;
