@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoService {
 
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
-    private CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
 
     public ProdutoService(ProdutoRepository produtoRepository, CategoriaRepository categoriaRepository) {
         this.produtoRepository = produtoRepository;

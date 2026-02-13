@@ -11,14 +11,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
-@RequestMapping(value = "/produto")
+@RestController
+@RequestMapping(value = "/produtos")
 public class ProdutoController {
 
-    private ProdutoService service;
+    private final ProdutoService service;
 
     public ProdutoController(ProdutoService service) {
         this.service = service;

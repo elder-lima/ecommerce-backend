@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/categoria")
 public class CategoriaController {
 
-    private CategoriaService service;
+    private final CategoriaService service;
 
     public CategoriaController(CategoriaService service) {
         this.service = service;
@@ -34,12 +34,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')") // Apenas admin pode acesar essa rota.
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<CategoriaResponse> insert(@RequestBody @Valid CategoriaRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.insert(request));
     }
 
     @DeleteMapping("/{nome}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable String nome) {
         service.delete(nome);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

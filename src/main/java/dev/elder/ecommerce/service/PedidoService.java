@@ -23,11 +23,11 @@ import java.util.UUID;
 @Service
 public class PedidoService {
 
-    private PedidoRepository pedidoRepository;
+    private final PedidoRepository pedidoRepository;
 
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
     public PedidoService(PedidoRepository pedidoRepository, UsuarioRepository usuarioRepository, ProdutoRepository produtoRepository) {
         this.pedidoRepository = pedidoRepository;

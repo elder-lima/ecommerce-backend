@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class CategoriaService {
     
-    private CategoriaRepository repository;
+    private final CategoriaRepository repository;
     
     public CategoriaService(CategoriaRepository repository) {
         this.repository = repository;
