@@ -60,6 +60,7 @@ public class ProdutoController {
     @Operation(summary = "Remover produto")
     @ApiResponse(responseCode = "204", description = "Produto removido")
     @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+    @ApiResponse(responseCode = "401", description = "Não Autenticado")
     @ApiResponse(responseCode = "403", description = "Acesso negado")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
