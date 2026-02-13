@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
 @Service
 public class AuthService {
 
-    private AuthUserRepository authUserRepository;
-    private UsuarioRepository usuarioRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private JwtEncoder jwtEncoder;
+    private final AuthUserRepository authUserRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtEncoder jwtEncoder;
 
     public AuthService(AuthUserRepository authUserRepository, UsuarioRepository usuarioRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, JwtEncoder jwtEncoder) {
         this.authUserRepository = authUserRepository;
