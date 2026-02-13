@@ -53,7 +53,7 @@ public class UsuarioController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-    @Operation(summary = "Listar todos os usuários")
+    @Operation(summary = "Listar todos os usuários (Apenas ADMIN)")
     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso")
     @ApiResponse(responseCode = "403", description = "Acesso negado")
     public ResponseEntity<List<UsuarioDetailResponse>> findAll() {
