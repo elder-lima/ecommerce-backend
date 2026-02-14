@@ -40,3 +40,4 @@ application-dev.properties
 private.key
 public.key
 
+.env
