@@ -17,6 +17,7 @@ A aplicação cobre desde **autenticação/autorização**, **gestão de usuári
 * **PostgreSQL**
 * **Flyway**
 * Swagger Open API
+* Docker
 
 ---
 
@@ -71,31 +72,6 @@ Abaixo está a modelagem relacional utilizada no projeto:
 
 ---
 
-## 📡 Principais Endpoints (Exemplo)
-
-### Autenticação
-
-```
-POST /auth/login
-```
-
-### Produtos
-
-```
-GET    /produtos
-POST   /produtos
-DELETE /produtos/{id}
-```
-
-### Pedidos
-
-```
-POST /pedidos
-GET  /pedidos
-```
-
----
-
 ## 🧪 Boas Práticas Aplicadas
 
 * Uso de **DTOs** para entrada e saída
@@ -120,11 +96,48 @@ src/main/resources/db/migration
 
 ---
 
-## ▶️ Como Executar o Projeto
+▶️ Como Executar o Projeto
 
-1. Clone o repositório
-2. Configure o banco de dados no `application.properties`
-3. Execute as migrations automaticamente
+# 🐳 Banco de Dados com Docker
+
+O projeto utiliza **PostgreSQL via Docker**, permitindo executar a aplicação sem instalar o banco de dados localmente.
+
+---
+
+## ✅ Pré-requisitos
+
+- Docker
+- Docker Compose
+- Java 21
+
+---
+
+## ⚙️ Configuração
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/elder-lima/ecommerce-backend.git
+cd ecommerce-backend
+```
+
+2. Crie um arquivo .env na raiz do projeto com base no .env.example:
+
+```bash
+POSTGRES_DB=ecommerce_db
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+```
+
+🚀 Subindo o banco de dados
+
+Execute:
+
+```bash
+docker compose up -d
+```
+
+3. Configure o banco de dados no `application.properties` com base no `application-example.properties`
 4. Rode a aplicação:
 
 ```bash
