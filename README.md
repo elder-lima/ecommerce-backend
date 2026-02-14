@@ -16,7 +16,7 @@ A aplicação cobre desde **autenticação/autorização**, **gestão de usuári
 * OAuth2 Resource Server (JWT)
 * **PostgreSQL**
 * **Flyway**
-* Maven
+* Swagger Open API
 
 ---
 
