@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -47,11 +47,7 @@ public class ProdutoService {
 
     @Transactional
     public ProdutoResponse insert(ProdutoRequest request) {
-        List<Categoria> categorias = categoriaRepository.findByNomeIn(request.categorias());
-
-        if (request.categorias() == null || request.categorias().isEmpty()) {
-            throw new IllegalArgumentException("Produto deve ter ao menos uma categoria");
-        }
+        Set<Categoria> categorias = categoriaRepository.findByNomeIn(request.categorias());
 
         if (categorias.size() != request.categorias().size()) {
             throw new ResourceNotFoundException("Uma ou mais categorias não existem");
@@ -71,7 +67,7 @@ public class ProdutoService {
     @Transactional
     public void delete(UUID id) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-        produtoRepository.delete(produto);
+        produtoRepository.deleteById(id);
     }
 
     @Transactional
