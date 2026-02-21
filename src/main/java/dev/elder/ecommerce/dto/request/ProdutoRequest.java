@@ -7,8 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 public record ProdutoRequest(
 
@@ -26,6 +25,6 @@ public record ProdutoRequest(
         String imagem,
 
         @NotEmpty
-        List<String> categorias
+        Set<Categoria> categorias
 
 ) {}
