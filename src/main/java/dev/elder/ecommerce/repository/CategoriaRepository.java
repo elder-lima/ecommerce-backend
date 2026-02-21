@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -15,5 +16,5 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
     boolean existsByNome(String nome);
 
-    List<Categoria> findByNomeIn(List<String> nomes);
+    Set<Categoria> findByNomeIn(Set<Categoria> nomes);
 }
