@@ -25,6 +25,6 @@ public record ProdutoRequest(
         String imagem,
 
         @NotEmpty
-        Set<Categoria> categorias
+        Set<CategoriaRequest> categorias
 
 ) {}

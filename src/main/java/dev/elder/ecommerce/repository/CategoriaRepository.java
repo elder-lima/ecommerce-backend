@@ -16,5 +16,5 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
     boolean existsByNome(String nome);
 
-    Set<Categoria> findByNomeIn(Set<Categoria> nomes);
+    Set<Categoria> findByNomeIn(Set<String> nomes);
 }

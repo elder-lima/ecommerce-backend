@@ -23,13 +23,13 @@ public class CategoriaService {
 
     @Transactional(readOnly = true)
     public List<CategoriaResponse> findAll() {
-        return repository.findAll().stream().map(x -> new CategoriaResponse(x.getNome())).toList();
+        return repository.findAll().stream().map(x -> new CategoriaResponse(x.getCategoria_id(), x.getNome())).toList();
     }
 
     @Transactional(readOnly = true)
     public CategoriaResponse findByName(String name) {
         Categoria categoria = repository.findByNome(name).orElseThrow(() -> new ResourceNotFoundException(name));
-        return new CategoriaResponse(categoria.getNome());
+        return new CategoriaResponse(categoria.getCategoria_id(), categoria.getNome());
     }
 
     @Transactional
@@ -39,8 +39,8 @@ public class CategoriaService {
         }
         Categoria novaCategoria = new Categoria();
         novaCategoria.setNome(obj.nome());
-        repository.save(novaCategoria);
-        CategoriaResponse dto = new CategoriaResponse(obj.nome());
+        Categoria categoriaSalva = repository.save(novaCategoria);
+        CategoriaResponse dto = new CategoriaResponse(categoriaSalva.getCategoria_id(), categoriaSalva.getNome());
         return dto;
     }
 

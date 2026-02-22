@@ -1,5 +1,6 @@
 package dev.elder.ecommerce.service;
 
+import dev.elder.ecommerce.dto.request.CategoriaRequest;
 import dev.elder.ecommerce.dto.request.ProdutoRequest;
 import dev.elder.ecommerce.dto.request.ProdutoUpdateRequest;
 import dev.elder.ecommerce.dto.response.CategoriaResponse;
@@ -34,7 +35,7 @@ public class ProdutoService {
 
     @Transactional(readOnly = true)
     public List<ProdutoResponse> findAll() {
-        List<ProdutoResponse> dto = produtoRepository.findAll().stream().map(x -> new ProdutoResponse(x.getProduto_id(), x.getNome(), x.getDescricao(), x.getPreco(), x.getImagem(), x.getCategorias().stream().map(c -> new CategoriaResponse(c.getNome())).collect(Collectors.toSet()))).toList();
+        List<ProdutoResponse> dto = produtoRepository.findAll().stream().map(x -> new ProdutoResponse(x.getProduto_id(), x.getNome(), x.getDescricao(), x.getPreco(), x.getImagem(), x.getCategorias().stream().map(c -> new CategoriaResponse(c.getCategoria_id(), c.getNome())).collect(Collectors.toSet()))).toList();
         return dto;
     }
 
@@ -47,7 +48,9 @@ public class ProdutoService {
 
     @Transactional
     public ProdutoResponse insert(ProdutoRequest request) {
-        Set<Categoria> categorias = categoriaRepository.findByNomeIn(request.categorias());
+
+        Set<String> nomesCategorias = request.categorias().stream().map(c -> c.nome()).collect(Collectors.toSet());
+        Set<Categoria> categorias = categoriaRepository.findByNomeIn(nomesCategorias);
 
         if (categorias.size() != request.categorias().size()) {
             throw new ResourceNotFoundException("Uma ou mais categorias não existem");
@@ -85,7 +88,7 @@ public class ProdutoService {
                 produto.getDescricao(),
                 produto.getPreco(),
                 produto.getImagem(),
-                produto.getCategorias().stream().map(categoria -> new CategoriaResponse(categoria.getNome())).collect(Collectors.toSet())
+                produto.getCategorias().stream().map(categoria -> new CategoriaResponse(categoria.getCategoria_id(), categoria.getNome())).collect(Collectors.toSet())
         );
     }
 
