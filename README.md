@@ -12,12 +12,15 @@ A aplicação cobre desde **autenticação/autorização**, **gestão de usuári
 * **Spring Boot**
 * Spring Web
 * Spring Data JPA / Hibernate
-* Spring Security
-* OAuth2 Resource Server (JWT)
+* Spring Security + JWT
+* OAuth2 Resource Server
 * **PostgreSQL**
 * **Flyway**
 * Swagger Open API
 * Docker
+* JUnit 5
+* Mockito
+* Maven
 
 ---
 
