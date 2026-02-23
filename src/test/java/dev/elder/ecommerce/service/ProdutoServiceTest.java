@@ -1,5 +1,6 @@
 package dev.elder.ecommerce.service;
 
+import dev.elder.ecommerce.dto.request.CategoriaRequest;
 import dev.elder.ecommerce.dto.request.ProdutoRequest;
 import dev.elder.ecommerce.dto.request.ProdutoUpdateRequest;
 import dev.elder.ecommerce.dto.response.ProdutoResponse;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -90,11 +92,13 @@ class ProdutoServiceTest {
     @DisplayName("Criando produto com Sucesso")
     void deveInserirProduto() {
         // ARRANGE
-        Categoria categoria1 = new Categoria();
-        categoria1.setNome("Eletronicos");
+        CategoriaRequest categoria1 = new CategoriaRequest(
+                "Eletronicos"
+        );
 
-        Categoria categoria2 = new Categoria();
-        categoria2.setNome("Computadores");
+        CategoriaRequest categoria2 = new CategoriaRequest(
+                "Computadores"
+        );
 
         ProdutoRequest request = new ProdutoRequest(
                 "Notebook",
@@ -104,8 +108,18 @@ class ProdutoServiceTest {
                 Set.of(categoria1, categoria2)
         );
 
-        when(categoriaRepository.findByNomeIn(request.categorias()))
-                .thenReturn(Set.of(categoria1, categoria2));
+        Set<String> nomes = request.categorias().stream().map(c -> c.nome()).collect(Collectors.toSet());
+
+        Categoria cat1 = new Categoria();
+        cat1.setNome("Eletronicos");
+
+        Categoria cat2 = new Categoria();
+        cat2.setNome("Computadores");
+
+        Set<Categoria> categorias = Set.of(cat1, cat2);
+
+        when(categoriaRepository.findByNomeIn(nomes))
+                .thenReturn(categorias);
 
         when(produtoRepository.save(any(Produto.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -136,7 +150,7 @@ class ProdutoServiceTest {
         assertEquals(2, produtoSalvo.getCategorias().size());
 
         // Verifica chamadas
-        verify(categoriaRepository).findByNomeIn(request.categorias());
+        verify(categoriaRepository).findByNomeIn(nomes);
         verifyNoMoreInteractions(produtoRepository, categoriaRepository);
     }
 
